@@ -14,7 +14,7 @@ export default class UrlsController {
 
     const validatedUrl = await vine.validate({ schema: urlSchema, data: body })
 
-    const shortenUrl = await this.urlShortenerService.retrieveShortenUrl(validatedUrl.url)
+    const shortenUrl = await this.urlShortenerService.retrieveUrl(validatedUrl.url)
 
     return response.ok(shortenUrl)
   }

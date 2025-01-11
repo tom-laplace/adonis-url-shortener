@@ -1,14 +1,14 @@
 import Url from '#models/url'
 
 export default class ShortenUrl {
-  async retrieveShortenUrl(url: string) {
-    let dbUrl = await this.returnUrlFromShortUrl(url)
+  async retrieveUrl(url: string) {
+    let dbUrl = await this.returnShortUrlFromUrl(url)
 
     if (dbUrl) {
       return dbUrl
     }
 
-    const shortenedUrl = this.shortenUrl()
+    const shortenedUrl = this.generateShortUrl()
 
     await this.insertUrl(url, shortenedUrl)
 
@@ -21,19 +21,19 @@ export default class ShortenUrl {
     return createdUrl
   }
 
-  async insertUrl(url: string, shortenedUrl: string) {
-    await Url.create({
-      url: url,
-      shortUrl: shortenedUrl,
-    })
-  }
-
   async returnShortUrlFromUrl(url: string) {
     const dbUrl = await Url.findBy('url', url)
 
     if (dbUrl) {
       return dbUrl.shortUrl
     }
+  }
+
+  async insertUrl(url: string, shortenedUrl: string) {
+    await Url.create({
+      url: url,
+      shortUrl: shortenedUrl,
+    })
   }
 
   async returnUrlFromShortUrl(url: string) {
@@ -44,7 +44,7 @@ export default class ShortenUrl {
     }
   }
 
-  shortenUrl() {
+  generateShortUrl() {
     return 'http://localhost:3333/' + this.generateEndpointId()
   }
 
