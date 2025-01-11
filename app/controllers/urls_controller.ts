@@ -16,7 +16,7 @@ export default class UrlsController {
 
     const shortenUrl = await this.urlShortenerService.retrieveUrl(validatedUrl.url)
 
-    return response.ok(shortenUrl)
+    return response.status(200).json({ url: validatedUrl.url, short_url: shortenUrl })
   }
 
   async redirectUrl({ response, request }: HttpContext) {
