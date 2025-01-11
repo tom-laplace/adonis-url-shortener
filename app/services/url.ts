@@ -1,6 +1,6 @@
 import Url from '#models/url'
 
-export default class ShortenUrl {
+export default class UrlService {
   async retrieveUrl(url: string) {
     let dbUrl = await this.returnShortUrlFromUrl(url)
 
@@ -29,19 +29,19 @@ export default class ShortenUrl {
     }
   }
 
-  async insertUrl(url: string, shortenedUrl: string) {
-    await Url.create({
-      url: url,
-      shortUrl: shortenedUrl,
-    })
-  }
-
   async returnUrlFromShortUrl(url: string) {
     const dbUrl = await Url.findBy('short_url', url)
 
     if (dbUrl) {
       return dbUrl.url
     }
+  }
+
+  async insertUrl(url: string, shortenedUrl: string) {
+    await Url.create({
+      url: url,
+      shortUrl: shortenedUrl,
+    })
   }
 
   generateShortUrl() {

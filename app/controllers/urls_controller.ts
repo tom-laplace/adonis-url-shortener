@@ -1,13 +1,13 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
-import ShortenUrl from '#services/shorten_url'
 import { inject } from '@adonisjs/core'
 import vine from '@vinejs/vine'
 import { urlSchema } from '#validators/url'
+import UrlService from '#services/url'
 
 @inject()
 export default class UrlsController {
-  constructor(private urlShortenerService: ShortenUrl) {}
+  constructor(private urlShortenerService: UrlService) {}
 
   async shortenUrl({ request, response }: HttpContext) {
     const body = request.only(['url'])
